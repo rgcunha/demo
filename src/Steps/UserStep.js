@@ -1,17 +1,21 @@
 'use strict';
 
 import React, { Component } from 'react';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 export default class UserStep extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: props.getStore().email,
-      gender: props.getStore().gender
+      country: props.getStore().country,
+      minAge: props.getStore().minAge,
+      maxAge: props.getStore().maxAge,
+      supportedTriages: props.getStore().supportedTriages
     };
 
-    this._validateOnDemand = true; // this flag enables onBlur validation as user fills forms
+    this._validateOnDemand = false; // this flag enables onBlur validation as user fills forms
 
     this.validationCheck = this.validationCheck.bind(this);
     this.isValidated = this.isValidated.bind(this);
@@ -28,7 +32,11 @@ export default class UserStep extends Component {
 
     // if full validation passes then save to store and pass as valid
     if (Object.keys(validateNewInput).every((k) => { return validateNewInput[k] === true })) {
-        if (this.props.getStore().email != userInput.email || this.props.getStore().gender != userInput.gender) { // only update store of something changed
+        if (this.props.getStore().country != userInput.country ||
+            this.props.getStore().minAge != userInput.minAge ||
+            this.props.getStore().maxAge != userInput.maxAge ||
+            this.props.getStore().supportedTriages != userInput.supportedTriages
+          ) { // only update store of something changed
           this.props.updateStore({
             ...userInput,
             savedToCloud: false // use this to notify step4 that some changes took place and prompt the user to save again
@@ -56,9 +64,15 @@ export default class UserStep extends Component {
   }
 
    _validateData(data) {
-    return  {
-      genderVal: (data.gender != 0), // required: anything besides N/A
-      emailVal: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(data.email), // required: regex w3c uses in html5
+    // return  {
+    //   genderVal: (data.gender != 0), // required: anything besides N/A
+    //   emailVal: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(data.email), // required: regex w3c uses in html5
+    // }
+    return {
+      countryVal: true,
+      minAgeVal: true,
+      maxAgeVal: true,
+      supportedTriagesVal: true
     }
   }
 
@@ -72,9 +86,19 @@ export default class UserStep extends Component {
 
   _grabUserInput() {
     return {
-      gender: this.refs.gender.value,
-      email: this.refs.email.value
+      country: this.refs.country.value,
+      minAge: this.refs.minAge.value,
+      maxAge: this.refs.maxAge.value,
+      supportedTriages: this.state.supportedTriages
     };
+  }
+
+  handleChange = (supportedTriages) => {
+    this.setState({ supportedTriages });
+    // selectedOption can be null when the `x` (close) button is clicked
+    if (supportedTriages) {
+      console.log(`Selected: ${supportedTriages.label}`);
+    }
   }
 
   render() {
@@ -98,56 +122,103 @@ export default class UserStep extends Component {
     }
 
     return (
-      <div className="step step3">
+      <div className="step step2">
         <div className="row">
           <form id="Form" className="form-horizontal">
             <div className="form-group">
               <label className="col-md-12 control-label">
-                <h1>Step 3: Basic JavaScript Validation Example</h1>
+                <h1>Step 2: User Targeting</h1>
               </label>
             </div>
             <div className="row content">
               <div className="col-md-12">
-                This example component has a form that uses local standard basic JavaScript validation.
+                Target users
               </div>
             </div>
-            <div className="form-group col-md-12 content form-block-holder">
-                <label className="control-label col-md-4">
-                  Gender
-                </label>
-                <div className={notValidClasses.genderCls}>
-                  <select
-                    ref="gender"
-                    autoComplete="off"
-                    className="form-control"
-                    required
-                    defaultValue={this.state.gender}
-                    onBlur={this.validationCheck}>
-                      <option value="">Please select</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                  </select>
-                  <div className={notValidClasses.genderValGrpCls}>{this.state.genderValMsg}</div>
-                </div>
+
+            <div className="form-group col-md-9 content form-block-holder">
+              <label className="control-label col-md-4">
+                Country
+              </label>
+              <div className={notValidClasses.genderCls}>
+                <select
+                  ref="country"
+                  autoComplete="off"
+                  className="form-control"
+                  required
+                  defaultValue={this.state.country}
+                  onBlur={this.validationCheck}>
+                    <option value="">Please select</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="DE">Germany</option>
+                    <option value="US">United States</option>>
+                </select>
+                <div className={notValidClasses.genderValGrpCls}>{this.state.genderValMsg}</div>
               </div>
-              <div className="form-group col-md-12 content form-block-holder">
-                <label className="control-label col-md-4">
-                  Email
-                </label>
-                <div className={notValidClasses.emailCls}>
-                  <input
-                    ref="email"
-                    autoComplete="off"
-                    type="email"
-                    placeholder="john.smith@example.com"
-                    className="form-control"
-                    required
-                    defaultValue={this.state.email}
-                    onBlur={this.validationCheck} />
-                  <div className={notValidClasses.emailValGrpCls}>{this.state.emailValMsg}</div>
-                </div>
+            </div>
+
+            <div className="form-group col-md-9 content form-block-holder">
+              <label className="control-label col-md-4">
+                Min Age
+              </label>
+              <div className={notValidClasses.emailCls}>
+                <input
+                  ref="minAge"
+                  autoComplete="off"
+                  type="text"
+                  placeholder="18"
+                  className="form-control"
+                  required
+                  defaultValue={this.state.minAge}
+                  onBlur={this.validationCheck} />
+                <div className={notValidClasses.emailValGrpCls}>{this.state.emailValMsg}</div>
               </div>
+            </div>
+
+            <div className="form-group col-md-9 content form-block-holder">
+              <label className="control-label col-md-4">
+                Max Age
+              </label>
+              <div className={notValidClasses.emailCls}>
+                <input
+                  ref="maxAge"
+                  autoComplete="off"
+                  type="text"
+                  placeholder="125"
+                  className="form-control"
+                  required
+                  defaultValue={this.state.maxAge}
+                  onBlur={this.validationCheck} />
+                <div className={notValidClasses.emailValGrpCls}>{this.state.emailValMsg}</div>
+              </div>
+            </div>
+
+            <div className="form-group col-md-9 content form-block-holder">
+              <label className="control-label col-md-4">
+                Supported Triage Levels
+              </label>
+              <div className={notValidClasses.genderCls}>
+                <Select
+                  multi
+                  ref="supportedTriages"
+                  name="supportedTriages"
+                  value={this.state.supportedTriages}
+                  onChange={this.handleChange}
+                  onBlur={this.validationCheck}
+                  options={[
+                    { value: 'SELFCARE', label: 'SelfCare' },
+                    { value: 'SELF_CARE_PHARMA', label: 'SelfCarePharma' },
+                    { value: 'PRIMARY_CARE_2_3_WEEKS', label: 'PrimaryCare2to3Weeks' },
+                    { value: 'PRIMARY_CARE_2_3_DAYS', label: 'PrimaryCare2to3Days' },
+                    { value: 'PRIMARY_CARE_SAME_DAY', label: 'PrimaryCareSameDay' },
+                    { value: 'PRIMARY_CARE_4_HOURS', label: 'PrimaryCare4Hours' },
+                    { value: 'GO_TO_ER', label: 'EmergencyCare' },
+                    { value: 'CALL_AN_AMBULANCE', label: 'CallAmbulance' }
+                  ]}
+                />
+                <div className={notValidClasses.genderValGrpCls}>{this.state.genderValMsg}</div>
+              </div>
+            </div>
           </form>
         </div>
       </div>

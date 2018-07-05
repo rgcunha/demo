@@ -139,11 +139,11 @@ export default class PartnerStep extends Component {
             </div>
             <div className="row content">
               <div className="col-md-12">
-                This is where we collect information about the partner
+                General Information about the partner
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Name
               </label>
@@ -161,7 +161,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Care Type
               </label>
@@ -185,7 +185,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Phone Number
               </label>
@@ -203,7 +203,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Website Url
               </label>
@@ -221,7 +221,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 App Store Url
               </label>
@@ -239,7 +239,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Play Store Url
               </label>
@@ -257,7 +257,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Opening/Service Hours
               </label>
@@ -275,7 +275,7 @@ export default class PartnerStep extends Component {
               </div>
             </div>
 
-            <div className="form-group col-md-12 content form-block-holder">
+            <div className="form-group col-md-9 content form-block-holder">
               <label className="control-label col-md-4">
                 Service Description
               </label>

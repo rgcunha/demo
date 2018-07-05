@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "joi": "^13.4.0",
-    "joi-validation-strategy": "^0.3.3",
-    "react": "^16.4.1",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.4.1",
+    "bootstrap": "3.3.7",
+    "joi": "13.4.0",
+    "joi-validation-strategy": "0.3.3",
+    "rc-tree-select": "2.0.6",
+    "react": "16.4.1",
+    "react-bootstrap": "0.32.1",
+    "react-dom": "16.4.1",
     "react-scripts": "1.1.4",
-    "react-stepzilla": "^4.7.2",
-    "react-validation-mixin": "^5.4.0"
+    "react-select": "1.2.1",
+    "react-stepzilla": "4.7.2",
+    "react-validation-mixin": "5.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

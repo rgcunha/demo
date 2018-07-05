@@ -12,6 +12,9 @@ import Step6 from './Step6';
 import PartnerStep from './Steps/PartnerStep'
 import UserStep from './Steps/UserStep'
 import ICDCodesStep from './Steps/ICDCodesStep'
+import ReviewStep from './Steps/ReviewStep'
+import CompletedStep from './Steps/CompletedStep'
+
 
 export default class Example extends Component {
   constructor(props) {
@@ -37,9 +40,9 @@ export default class Example extends Component {
       serviceDescription: '',
       minAge: '',
       maxAge: '',
-      supportedTriages: ''
+      supportedTriages: [],
+      icd10Codes: []
     }
-
   }
 
   componentDidMount() {}
@@ -70,19 +73,22 @@ export default class Example extends Component {
 
     const steps = [
       {name: 'Partner Info', component: <PartnerStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'User Targetting', component: <UserStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'ICD-10 Codes', component: <ICDCodesStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />}
+      {name: 'User Targeting', component: <UserStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+      {name: 'ICD-10 Codes', component: <ICDCodesStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+      {name: 'Review', component: <ReviewStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+			{name: 'Completed', component: <CompletedStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />}
     ]
 
 
     return (
       <div className='example'>
+        <img className='logo' src="https://www.featuredcustomers.com/media/Company.logo/ada-Logo_2017_copy.png" />
         <div className='step-progress'>
           <StepZilla
             steps={steps}
             preventEnterSubmission={true}
             nextTextOnFinalActionStep={"Save"}
-            hocValidationAppliedTo={[3]}
+            hocValidationAppliedTo={[4]}
             startAtStep={window.sessionStorage.getItem('step') ? parseFloat(window.sessionStorage.getItem('step')) : 0}
             onStepChange={(step) => window.sessionStorage.setItem('step', step)}
            />
