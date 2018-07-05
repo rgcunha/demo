@@ -9,16 +9,37 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
 
+import PartnerStep from './Steps/PartnerStep'
+import UserStep from './Steps/UserStep'
+import ICDCodesStep from './Steps/ICDCodesStep'
+
 export default class Example extends Component {
   constructor(props) {
     super(props);
     this.state = {};
 
+    // this.sampleStore = {
+    //   email: '',
+    //   gender: '',
+    //   savedToCloud: false
+    // };
+
     this.sampleStore = {
-      email: '',
-      gender: '',
-      savedToCloud: false
-    };
+      name: '',
+      careType: '',
+      country: '',
+      countryCode: '',
+      phoneNumber: '',
+      websiteUrl: '',
+      appStoreUrl: '',
+      playStoreUrl: '',
+      openingHours: '',
+      serviceDescription: '',
+      minAge: '',
+      maxAge: '',
+      supportedTriages: ''
+    }
+
   }
 
   componentDidMount() {}
@@ -37,15 +58,22 @@ export default class Example extends Component {
   }
 
   render() {
-    const steps =
-    [
-      {name: 'Step1', component: <Step1 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'Step2', component: <Step2 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'Step3', component: <Step3 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'step4', component: <Step4 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'Step5', component: <Step5 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
-      {name: 'Step6', component: <Step6 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />}
+    // const steps =
+    // [
+    //   {name: 'Step1', component: <Step1 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+    //   {name: 'Step2', component: <Step2 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+    //   {name: 'Step3', component: <Step3 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+    //   {name: 'step4', component: <Step4 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+    //   {name: 'Step5', component: <Step5 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+    //   {name: 'Step6', component: <Step6 getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />}
+    // ]
+
+    const steps = [
+      {name: 'Partner Info', component: <PartnerStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+      {name: 'User Targetting', component: <UserStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />},
+      {name: 'ICD-10 Codes', component: <ICDCodesStep getStore={() => (this.getStore())} updateStore={(u) => {this.updateStore(u)}} />}
     ]
+
 
     return (
       <div className='example'>
