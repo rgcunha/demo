@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import Promise from 'promise';
+import axios from 'axios'
 
 export default class ReviewStep extends Component {
   constructor(props) {
@@ -37,20 +38,187 @@ export default class ReviewStep extends Component {
       saving: true
     });
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        this.setState({
-          saving: true
-        });
+    const request = {
+      "careType" : "Telemedecine",
+      "phoneNumber" : "+55 55 5555 5555",
+      "callLabel" : "Dr. Foo",
+      "websiteUrl" : "https://www.dr-foo.com",
+      "appUrl" : "https://itunes.apple.com/gb/app/dr-foo/asddsdds?mt=8",
+      "appLabel" : "Dr. Foo",
+      "openingHours" : {
+          "openingDays" : [
+              {
+                  "day" : "MONDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "TUESDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "WEDNESDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "THURSDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "FRIDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "SATURDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              },
+              {
+                  "day" : "SUNDAY",
+                  "openingPeriods" : [
+                      {
+                          "open" : "0000",
+                          "close" : "2359"
+                      }
+                  ]
+              }
+          ]
+      },
+      "timeZone" : "UTC",
+      "serviceDescription" : "Help is at hand with 60 minute of porn. LOL Just kidding, we're just here to help you.",
+      "patientMinAge" : 18,
+      "patientMaxAge" : 120,
+      "mainProfileMinAge" : 18,
+      "supportedTriageLevels" : [
+          "PRIMARY_CARE_2_3_WEEKS",
+          "PRIMARY_CARE_2_3_DAYS",
+          "PRIMARY_CARE_SAME_DAY"
+      ],
+      "supportedIcd10" : [
+          "F10",
+          "F68",
+          "F84",
+          "F90",
+          "F95",
+          "I42",
+          "R15",
+          "R63",
+          "Z73"
+      ],
+      "countryCode" : "GB",
+      "partnerKey" : "5b29350d6ae73dcabb5fd979"
+    }
 
-        this.props.updateStore({savedToCloud: true});  // Update store here (this is just an example, in reality you will do it via redux or flux)
+    const store = this.props.getStore();
 
-        // call resolve() to indicate that server validation or other aync method was a success.
-        // ... only then will it move to the next step. reject() will indicate a fail
-        resolve();
-        // reject(); // or reject
-      }, 5000);
+    const request2 = {
+      careType    : store.careType,
+      phoneNumber : store.phoneNumber,
+      callLabel   : "Dr. Foo",
+      websiteUrl  : store.websiteUrl,
+      appUrl      : store.appUrl,
+      appLabel    : "Dr. Foo",
+      openingHours: {
+        openingDays: []
+      },
+      timeZone : "UTC",
+      serviceDescription : store.serviceDescription,
+      patientMinAge : store.minAge,
+      patientMaxAge : store.maxAge,
+      mainProfileMinAge : store.minAge,
+      supportedTriageLevels : store.supportedTriages,
+      supportedIcd10: store.supportedIcd10,
+      countryCode: store.country,
+      partnerKey : "5b29350d6ae73dcabb5fd979"
+    }
+
+    const url = 'http://bronx2.internal.ada.com:8089/api/care-types'
+    const config = {
+      headers: {'Content-Type': 'application/json'}
+    }
+
+    const instance = axios.create({
+      baseURL: 'http://bronx.internal.ada.com:8089/api',
+      // baseURL: 'https://restcountries.eu/rest/v2',
+      timeout: 1000,
+      headers: {'Content-Type': 'application/json'}
     });
+
+    // return axios.post(url, request, config)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+
+    instance.post('/care-types', request)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // instance.get('/care-types/5b3f4079365eaf269bb6030f')
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+
+
+      // instance.get('/all')
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     this.setState({
+    //       saving: true
+    //     });
+    //
+    //     this.props.updateStore({savedToCloud: true});  // Update store here (this is just an example, in reality you will do it via redux or flux)
+    //
+    //     // call resolve() to indicate that server validation or other aync method was a success.
+    //     // ... only then will it move to the next step. reject() will indicate a fail
+    //     resolve();
+    //     // reject(); // or reject
+    //   }, 5000);
+    // });
   }
 
   // jumpToStep(toStep) {
